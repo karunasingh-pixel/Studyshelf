@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academic Resource Hub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="navbar">
+    <a href="#" class="logo">📚 Academic Hub</a>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#resources">Resources</a>
+      <a href="#upload">Upload</a>
+      <a href="#bookmarks">Bookmarks</a>
+      <a href="#admin">Admin</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <h1>Discover. Learn. Share.</h1>
+      <p>Your central library for academic resources.</p>
+      <input
+        type="search"
+        id="searchInput"
+        placeholder="Search notes, courses, papers..."
+        aria-label="Search resources"
+      >
+    </section>
+
+    <section class="section" id="resources">
+      <h2>Explore Resources</h2>
+
+      <div class="filters">
+        <select id="categoryFilter" aria-label="Filter by category">
+          <option value="all">All Categories</option>
+          <option value="Notes">Lecture Notes</option>
+          <option value="Research">Research Papers</option>
+          <option value="Papers">Past Exam Papers</option>
+          <option value="Tutorials">Tutorials</option>
+        </select>
+
+        <select id="courseFilter" aria-label="Filter by course">
+          <option value="all">All Courses</option>
+          <option value="Computer Science">Computer Science</option>
+          <option value="Mathematics">Mathematics</option>
+          <option value="Physics">Physics</option>
+          <option value="Business">Business</option>
+        </select>
+
+        <select id="sortFilter" aria-label="Sort resources">
+          <option value="newest">Newest First</option>
+          <option value="rating">Highest Rated</option>
+          <option value="downloads">Most Downloaded</option>
+        </select>
+      </div>
+
+      <p id="resultCount" aria-live="polite"></p>
+      <div class="resource-grid" id="resourceList"></div>
+    </section>
+
+    <section class="section" id="upload">
+      <h2>Share a Resource</h2>
+      <form id="uploadForm" class="upload-form">
+        <label for="title">Resource Title</label>
+        <input id="title" name="title" required maxlength="120"
+               placeholder="e.g. Data Structures Notes">
+
+        <label for="description">Description</label>
+        <textarea id="description" name="description" required
+                  maxlength="1000"
+                  placeholder="Describe the resource"></textarea>
+
+        <label for="category">Category</label>
+        <select id="category" name="category" required>
+          <option value="Notes">Lecture Notes</option>
+          <option value="Research">Research Papers</option>
+          <option value="Papers">Past Exam Papers</option>
+          <option value="Tutorials">Tutorials</option>
+        </select>
+
+        <label for="course">Course</label>
+        <select id="course" name="course" required>
+          <option value="Computer Science">Computer Science</option>
+          <option value="Mathematics">Mathematics</option>
+          <option value="Physics">Physics</option>
+          <option value="Business">Business</option>
+        </select>
+
+        <label for="resourceFile">Upload a file (optional)</label>
+        <input id="resourceFile" name="resourceFile" type="file"
+               accept=".pdf,.ppt,.pptx,.doc,.docx,.txt">
+
+        <label for="resourceUrl">Or enter a resource URL (optional)</label>
+        <input id="resourceUrl" name="resourceUrl" type="url"
+               placeholder="https://example.edu/resource">
+
+        <button type="submit">Submit Resource</button>
+        <p class="hint">Resources submitted in this prototype are saved locally and marked pending.</p>
+      </form>
+    </section>
+
+    <section class="section" id="bookmarks">
+      <h2>My Bookmarks</h2>
+      <div class="resource-grid" id="bookmarkList"></div>
+    </section>
+
+    <section class="section" id="admin">
+      <h2>Moderation Dashboard</h2>
+      <p class="hint">
+        Demonstration only. A real admin dashboard requires secure authentication.
+      </p>
+      <div id="pendingList"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 Academic Resource Hub | Learn and share responsibly.</p>
+  </footer>
+
+  <dialog id="previewDialog">
+    <button type="button" id="closePreview" class="close-button"
+            aria-label="Close preview">✕</button>
+    <div id="previewContent"></div>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
