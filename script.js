@@ -579,5 +579,3 @@ document.addEventListener('click', (event) => {
 });
 
 renderAll();
-
-
