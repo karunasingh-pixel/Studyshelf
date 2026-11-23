@@ -1,132 +1,297 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>StudyShelf</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header class="navbar">
-    <a href="#" class="logo">StudyShelf</a>
-    <nav>
-      <a href="#home">Home</a>
-      <a href="#resources">Resources</a>
-      <a href="#upload">Upload</a>
-      <a href="#bookmarks">Bookmarks</a>
-      <a href="#admin">Admin</a>
-    </nav>
-  </header>
-
-  <main>
-    <section class="hero" id="home">
-      <h1>Discover. Learn. Share.</h1>
-      <p>Your central library for academic resources.</p>
-      <input
-        type="search"
-        id="searchInput"
-        placeholder="Search notes, courses, papers..."
-        aria-label="Search resources"
-      >
-    </section>
-
-    <section class="section" id="resources">
-      <h2>Explore Resources</h2>
-
-      <div class="filters">
-        <select id="categoryFilter" aria-label="Filter by category">
-          <option value="all">All Categories</option>
-          <option value="Notes">Lecture Notes</option>
-          <option value="Research">Research Papers</option>
-          <option value="Papers">Past Exam Papers</option>
-          <option value="Tutorials">Tutorials</option>
-        </select>
-
-        <select id="courseFilter" aria-label="Filter by course">
-          <option value="all">All Courses</option>
-          <option value="Computer Science">Computer Science</option>
-          <option value="Mathematics">Mathematics</option>
-          <option value="Physics">Physics</option>
-          <option value="Business">Business</option>
-        </select>
-
-        <select id="sortFilter" aria-label="Sort resources">
-          <option value="newest">Newest First</option>
-          <option value="rating">Highest Rated</option>
-          <option value="downloads">Most Downloaded</option>
-        </select>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StudyShelf | Academic Resource Portal</title>
+    <meta
+      name="description"
+      content="StudyShelf is a student-first academic resource sharing platform for notes, books, papers, and study materials."
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container nav-wrap">
+        <a href="#home" class="brand">📚 StudyShelf</a>
+        <nav class="main-nav" aria-label="Main navigation">
+          <a href="#home">Home</a>
+          <a href="#resources">Resources</a>
+          <a href="#upload">Upload</a>
+          <a href="#bookmarks">Bookmarks</a>
+          <a href="#moderation">Moderation</a>
+        </nav>
       </div>
+    </header>
 
-      <p id="resultCount" aria-live="polite"></p>
-      <div class="resource-grid" id="resourceList"></div>
-    </section>
+    <main>
+      <section class="hero" id="home">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Student Academic Resource Hub</p>
+            <h1>Find smarter study materials in one place.</h1>
+            <p class="hero-text">
+              StudyShelf helps students discover notes, papers, lecture slides, and
+              reference materials for their courses and semesters without searching
+              across multiple groups and folders.
+            </p>
 
-    <section class="section" id="upload">
-      <h2>Share a Resource</h2>
-      <form id="uploadForm" class="upload-form">
-        <label for="title">Resource Title</label>
-        <input id="title" name="title" required maxlength="120"
-               placeholder="e.g. Data Structures Notes">
+            <div class="cta-row">
+              <a href="#resources" class="primary-btn">Explore resources</a>
+              <a href="#upload" class="secondary-btn">Upload resource</a>
+            </div>
 
-        <label for="description">Description</label>
-        <textarea id="description" name="description" required
-                  maxlength="1000"
-                  placeholder="Describe the resource"></textarea>
+            <div class="search-box">
+              <input
+                type="search"
+                id="searchInput"
+                placeholder="Search by title, subject, course, or tags..."
+                aria-label="Search academic resources"
+              />
+              <button id="searchButton" type="button">Search</button>
+            </div>
 
-        <label for="category">Category</label>
-        <select id="category" name="category" required>
-          <option value="Notes">Lecture Notes</option>
-          <option value="Research">Research Papers</option>
-          <option value="Papers">Past Exam Papers</option>
-          <option value="Tutorials">Tutorials</option>
-        </select>
+            <div class="mini-stats">
+              <div class="stat-box">
+                <strong id="statusResourceCount">0</strong>
+                <span>Resources</span>
+              </div>
+              <div class="stat-box">
+                <strong id="statusCategoryCount">0</strong>
+                <span>Categories</span>
+              </div>
+              <div class="stat-box">
+                <strong id="statusBookmarkCount">0</strong>
+                <span>Bookmarks</span>
+              </div>
+            </div>
+          </div>
 
-        <label for="course">Course</label>
-        <select id="course" name="course" required>
-          <option value="Computer Science">Computer Science</option>
-          <option value="Mathematics">Mathematics</option>
-          <option value="Physics">Physics</option>
-          <option value="Business">Business</option>
-        </select>
+          <aside class="hero-panel" aria-label="Featured topics">
+            <h2>Featured</h2>
+            <ul class="feature-list">
+              <li>📘 Engineering notes</li>
+              <li>🧠 Programming practice</li>
+              <li>📐 Mathematics formulas</li>
+              <li>📄 Previous year papers</li>
+              <li>📚 Study guides</li>
+            </ul>
+            <div class="mini-card">
+              <span>Most active category</span>
+              <strong id="topCategoryLabel">Programming</strong>
+            </div>
+          </aside>
+        </div>
+      </section>
 
-        <label for="resourceFile">Upload a file (optional)</label>
-        <input id="resourceFile" name="resourceFile" type="file"
-               accept=".pdf,.ppt,.pptx,.doc,.docx,.txt">
+      <section class="section categories-section">
+        <div class="container">
+          <div class="section-header">
+            <h2>Popular categories</h2>
+          </div>
+          <div id="categoryList" class="category-grid"></div>
+        </div>
+      </section>
 
-        <label for="resourceUrl">Or enter a resource URL (optional)</label>
-        <input id="resourceUrl" name="resourceUrl" type="url"
-               placeholder="https://example.edu/resource">
+      <section class="section" id="resources">
+        <div class="container">
+          <div class="section-header resources-header">
+            <h2>Explore resources</h2>
+            <button type="button" class="ghost-btn" id="clearFilters">Clear filters</button>
+          </div>
 
-        <button type="submit">Submit Resource</button>
-        <p class="hint">Resources submitted in this prototype are saved locally and marked pending.</p>
-      </form>
-    </section>
+          <div class="filter-bar">
+            <select id="categoryFilter" aria-label="Filter by category">
+              <option value="all">All categories</option>
+              <option value="Programming">Programming</option>
+              <option value="Mathematics">Mathematics</option>
+              <option value="Computer Science">Computer Science</option>
+              <option value="Engineering">Engineering</option>
+              <option value="Physics">Physics</option>
+              <option value="Chemistry">Chemistry</option>
+              <option value="Communication Skills">Communication Skills</option>
+              <option value="Previous Year Papers">Previous Year Papers</option>
+              <option value="Assignments">Assignments</option>
+              <option value="General Study Materials">General Study Materials</option>
+            </select>
 
-    <section class="section" id="bookmarks">
-      <h2>My Bookmarks</h2>
-      <div class="resource-grid" id="bookmarkList"></div>
-    </section>
+            <select id="courseFilter" aria-label="Filter by course">
+              <option value="all">All courses</option>
+              <option value="BCA">BCA</option>
+              <option value="B.Tech">B.Tech</option>
+              <option value="B.Sc">B.Sc</option>
+              <option value="B.Com">B.Com</option>
+              <option value="BA">BA</option>
+            </select>
 
-    <section class="section" id="admin">
-      <h2>Moderation Dashboard</h2>
-      <p class="hint">
-        Demonstration only. A real admin dashboard requires secure authentication.
-      </p>
-      <div id="pendingList"></div>
-    </section>
-  </main>
+            <select id="typeFilter" aria-label="Filter by resource type">
+              <option value="all">All resource types</option>
+              <option value="PDF Notes">PDF Notes</option>
+              <option value="Lecture Notes">Lecture Notes</option>
+              <option value="Previous Year Question Papers">Previous Year Question Papers</option>
+              <option value="Assignments">Assignments</option>
+              <option value="E-books">E-books</option>
+              <option value="Presentations">Presentations</option>
+              <option value="Study Guides">Study Guides</option>
+              <option value="Reference Materials">Reference Materials</option>
+            </select>
 
-  <footer>
-    <p> 2026 Academic Resource Hub | Learn and share responsibly.</p>
-  </footer>
+            <select id="semesterFilter" aria-label="Filter by semester">
+              <option value="all">All semesters</option>
+              <option value="Semester 1">Semester 1</option>
+              <option value="Semester 2">Semester 2</option>
+              <option value="Semester 3">Semester 3</option>
+              <option value="Semester 4">Semester 4</option>
+              <option value="Semester 5">Semester 5</option>
+              <option value="Semester 6">Semester 6</option>
+            </select>
 
-  <dialog id="previewDialog">
-    <button type="button" id="closePreview" class="close-button"
-            aria-label="Close preview">✕</button>
-    <div id="previewContent"></div>
-  </dialog>
+            <select id="sortFilter" aria-label="Sort resources">
+              <option value="newest">Newest first</option>
+              <option value="rating">Highest rated</option>
+              <option value="downloads">Most downloaded</option>
+            </select>
+          </div>
 
-  <script src="script.js"></script>
-</body>
+          <p id="resultCount" class="result-count" aria-live="polite"></p>
+          <div id="resourceList" class="resource-grid"></div>
+        </div>
+      </section>
+
+      <section class="section" id="upload">
+        <div class="container">
+          <div class="section-header">
+            <h2>Share a resource</h2>
+          </div>
+
+          <form id="uploadForm" class="upload-form">
+            <div class="form-grid">
+              <div class="field-group">
+                <label for="resourceTitle">Resource title</label>
+                <input id="resourceTitle" name="resourceTitle" type="text" placeholder="e.g. Object Oriented Programming Notes" required maxlength="120" />
+              </div>
+
+              <div class="field-group">
+                <label for="resourceCourse">Course</label>
+                <select id="resourceCourse" name="resourceCourse" required>
+                  <option value="">Select course</option>
+                  <option value="BCA">BCA</option>
+                  <option value="B.Tech">B.Tech</option>
+                  <option value="B.Sc">B.Sc</option>
+                  <option value="B.Com">B.Com</option>
+                  <option value="BA">BA</option>
+                </select>
+              </div>
+
+              <div class="field-group">
+                <label for="resourceSubject">Subject</label>
+                <input id="resourceSubject" name="resourceSubject" type="text" placeholder="e.g. Java Programming" required maxlength="80" />
+              </div>
+
+              <div class="field-group">
+                <label for="resourceSemester">Semester</label>
+                <select id="resourceSemester" name="resourceSemester" required>
+                  <option value="">Select semester</option>
+                  <option value="Semester 1">Semester 1</option>
+                  <option value="Semester 2">Semester 2</option>
+                  <option value="Semester 3">Semester 3</option>
+                  <option value="Semester 4">Semester 4</option>
+                  <option value="Semester 5">Semester 5</option>
+                  <option value="Semester 6">Semester 6</option>
+                </select>
+              </div>
+
+              <div class="field-group full-width">
+                <label for="resourceDescription">Description</label>
+                <textarea id="resourceDescription" name="resourceDescription" rows="4" placeholder="Add a short summary of what this material covers" required maxlength="500"></textarea>
+              </div>
+
+              <div class="field-group">
+                <label for="resourceCategory">Category</label>
+                <select id="resourceCategory" name="resourceCategory" required>
+                  <option value="">Select category</option>
+                  <option value="Programming">Programming</option>
+                  <option value="Mathematics">Mathematics</option>
+                  <option value="Computer Science">Computer Science</option>
+                  <option value="Engineering">Engineering</option>
+                  <option value="Physics">Physics</option>
+                  <option value="Chemistry">Chemistry</option>
+                  <option value="Communication Skills">Communication Skills</option>
+                  <option value="Previous Year Papers">Previous Year Papers</option>
+                  <option value="Assignments">Assignments</option>
+                  <option value="General Study Materials">General Study Materials</option>
+                </select>
+              </div>
+
+              <div class="field-group">
+                <label for="resourceType">Resource type</label>
+                <select id="resourceType" name="resourceType" required>
+                  <option value="">Select type</option>
+                  <option value="PDF Notes">PDF Notes</option>
+                  <option value="Lecture Notes">Lecture Notes</option>
+                  <option value="Previous Year Question Papers">Previous Year Question Papers</option>
+                  <option value="Assignments">Assignments</option>
+                  <option value="E-books">E-books</option>
+                  <option value="Presentations">Presentations</option>
+                  <option value="Study Guides">Study Guides</option>
+                  <option value="Reference Materials">Reference Materials</option>
+                </select>
+              </div>
+
+              <div class="field-group full-width">
+                <label for="resourceTags">Optional tags</label>
+                <input id="resourceTags" name="resourceTags" type="text" placeholder="e.g. Java, OOP, exam prep, coding" maxlength="120" />
+              </div>
+
+              <div class="field-group full-width">
+                <label for="resourceUrl">Resource link</label>
+                <input id="resourceUrl" name="resourceUrl" type="url" placeholder="https://example.com/resource.pdf" required />
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="primary-btn">Submit resource</button>
+              <p class="helper-text">This frontend demo stores information in your browser using Local Storage.</p>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="section" id="bookmarks">
+        <div class="container">
+          <div class="section-header">
+            <h2>Saved resources</h2>
+          </div>
+          <div id="bookmarkList" class="resource-grid"></div>
+        </div>
+      </section>
+
+      <section class="section" id="moderation">
+        <div class="container">
+          <div class="section-header">
+            <h2>Moderation dashboard</h2>
+          </div>
+          <p class="helper-text">
+            Frontend-only moderation demo. Approved items appear in the public library,
+            while rejected items stay hidden.
+          </p>
+          <div id="moderationList" class="moderation-grid"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-wrap">
+        <p>© 2026 StudyShelf | Share knowledge. Simplify learning. Grow together.</p>
+      </div>
+    </footer>
+
+    <dialog id="previewDialog">
+      <button type="button" id="closePreview" class="close-btn" aria-label="Close preview">✕</button>
+      <div id="previewContent"></div>
+    </dialog>
+
+    <script src="script.js"></script>
+  </body>
 </html>
+
